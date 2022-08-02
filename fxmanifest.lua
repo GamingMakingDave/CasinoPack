@@ -7,8 +7,6 @@ version '1.0.0'
 client_scripts {
     'client/ipl.lua',
     'client/luckywheel.lua'
-
-    --'client/ui.lua'
 } 
 server_scripts {
     'server/luckywheel.lua'
