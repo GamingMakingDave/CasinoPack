@@ -42,7 +42,7 @@ Citizen.CreateThread(function()
             _wheel = CreateObject(model, 978.0117, 50.34866, 73.92611, false, false, true)
             SetEntityHeading(_wheel, 327.99411010742)
             SetModelAsNoLongerNeeded(model)
-            -- spawnveh()
+            spawnveh()
             table.insert(casinoprops, _wheel)
             table.insert(casinoprops, _basewheel)
         end)
@@ -60,8 +60,8 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent("esx_tpnrp_luckywheel:doRoll")
-AddEventHandler("esx_tpnrp_luckywheel:doRoll", function(_priceIndex)
+RegisterNetEvent("GMD_Casinopack:doRoll")
+AddEventHandler("GMD_Casinopack:doRoll", function(_priceIndex)
     _isRolling = true
     SetEntityHeading(_wheel, 327.99411010742)
     SetEntityRotation(_wheel, 0.0, 0.0, 0.0, 1, true)
@@ -99,8 +99,8 @@ AddEventHandler("esx_tpnrp_luckywheel:doRoll", function(_priceIndex)
     end)
 end)
 
-RegisterNetEvent("esx_tpnrp_luckywheel:rollFinished")
-AddEventHandler("esx_tpnrp_luckywheel:rollFinished", function()
+RegisterNetEvent("GMD_Casinopack:rollFinished")
+AddEventHandler("GMD_Casinopack:rollFinished", function()
     _isRolling = false
 end)
 
@@ -135,7 +135,7 @@ function doRoll()
                 Citizen.Wait(0)
                 DisableAllControlActions(0)
             end
-            TriggerServerEvent("esx_tpnrp_luckywheel:getLucky")
+            TriggerServerEvent("GMD_Casinopack:getLucky")
             TaskPlayAnim(playerPed, lib, 'armraisedidle_to_spinningidle_high', 8.0, -8.0, -1, 0, 0, false, false, false)
         end)
     end
@@ -156,33 +156,28 @@ Citizen.CreateThread(function()
     end
 end)
 
---function spawnveh()
-    --Zones = {
-        --VehicleSpawnPoint = {
-            --Pos   = {x = 963.51, y = 48.21, z = -75.57},
-            --Heading = 182.73
-        --}
-    --}
+function spawnveh()
+    local Spawn = vector3(Config.CasinoCarPos.Spawn.x, Config.CasinoCarPos.Spawn.y, Config.CasinoCarPos.Spawn.z)
+    local carmodel = GetHashKey(Config.Carmodel)
 
-    --local carmodel = GetHashKey('furia')
-    --RequestModel(carmodel)
-    --while not HasModelLoaded(carmodel) do
-        --Citizen.Wait(0)
-    --end
+    RequestModel(carmodel)
+    while not HasModelLoaded(carmodel) do
+        Citizen.Wait(0)
+    end
 
-    --ESX.Game.SpawnLocalVehicle(carmodel,  Zones.VehicleSpawnPoint.Pos, Zones.VehicleSpawnPoint.Heading, function(vehicle)
-        --Citizen.Wait(10)
-        --SetEntityAsMissionEntity(vehicle, true, true)
-        --SetVehicleHasBeenOwnedByPlayer(vehicle, true)
-        --SetVehicleOnGroundProperly(vehicle)
-        --Citizen.Wait(10)
-        --FreezeEntityPosition(vehicle, true)
-        --SetEntityInvincible(vehicle, true)
-        --SetVehicleDoorsLocked(vehicle, 2)
-        --_lambo = vehicle
-        --table.insert(casinoprops, _lambo)
-    --end)
---end
+    ESX.Game.SpawnLocalVehicle(carmodel,  Spawn, function(vehicle)
+        Citizen.Wait(10)
+        SetEntityAsMissionEntity(vehicle, true, true)
+        SetVehicleHasBeenOwnedByPlayer(vehicle, true)
+        SetVehicleOnGroundProperly(vehicle)
+        Citizen.Wait(10)
+        FreezeEntityPosition(vehicle, true)
+        SetEntityInvincible(vehicle, true)
+        SetVehicleDoorsLocked(vehicle, 2)
+        _lambo = vehicle
+        table.insert(casinoprops, _lambo)
+    end)
+end
 
 AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
