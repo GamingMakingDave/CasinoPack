@@ -8,8 +8,8 @@ isRoll = false
 amount = Config.WheelCost
 
 
-RegisterServerEvent('esx_tpnrp_luckywheel:getLucky')
-AddEventHandler('esx_tpnrp_luckywheel:getLucky', function()
+RegisterServerEvent('GMD_Casinopack:getLucky')
+AddEventHandler('GMD_Casinopack:getLucky', function()
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     if not isRoll then
@@ -94,12 +94,14 @@ AddEventHandler('esx_tpnrp_luckywheel:getLucky', function()
                         -- print("win mu~ 1, giap 3")
                         xPlayer.addInventoryItem("police_helmet_1", 1)
                         xPlayer.addInventoryItem("bullet_wear_1", 1)
-                        TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " gewann 1 Hut 1, Rüstung 1 !")
+                        -- TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " gewann 1 Hut 1, Rüstung 1 !")
+                        TriggerClientEvent('esx:showNotification', -1, (Config.Language[Config.Locale]['YouHave']))
                     elseif _priceIndex == 2 or _priceIndex == 6 or _priceIndex == 10 or _priceIndex == 14 or _priceIndex == 18 then
                         -- print("banh mi + nuoc")
                         xPlayer.addInventoryItem("bread", 10)
                         xPlayer.addInventoryItem("water", 24)
-                        TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được 1 lốc nước suối 24 chai + 10 cái bánh mì!")
+                        -- TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được 1 lốc nước suối 24 chai + 10 cái bánh mì!")
+                        TriggerClientEvent('esx:showNotification', -1, (Config.Language[Config.Locale]['YouHave']))
                     elseif _priceIndex == 3 or _priceIndex == 7 or _priceIndex == 15 or _priceIndex == 20 then
                         -- print("Win money")
                         local _money = 0
@@ -113,7 +115,8 @@ AddEventHandler('esx_tpnrp_luckywheel:getLucky', function()
                             _money = 50000
                         end
                         xPlayer.addMoney(_money)
-                        TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được " .. ESX.Math.GroupDigits(_money) .. "$")
+                        -- TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được " .. ESX.Math.GroupDigits(_money) .. "$")
+                        TriggerClientEvent('esx:showNotification', -1, (Config.Language[Config.Locale]['YouHave']))
                     elseif _priceIndex == 4 or _priceIndex == 8 or _priceIndex == 11 or _priceIndex == 16 then
                         -- print("Black money x2")
                         local _blackMoney = 0
@@ -128,26 +131,30 @@ AddEventHandler('esx_tpnrp_luckywheel:getLucky', function()
                         end
                         xPlayer.addAccountMoney("black_money", _blackMoney * 10)
                         -- xPlayer.addMoney(_blackMoney * 2)
-                        TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " gewann " .. ESX.Math.GroupDigits(_blackMoney * 10) .. "$")
+                        -- TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " gewann " .. ESX.Math.GroupDigits(_blackMoney * 10) .. "$")
+                        TriggerClientEvent('esx:showNotification', -1, (Config.Language[Config.Locale]['YouHave']))
                     elseif _priceIndex == 5 then
                         -- print("Win 300,000$")
                         xPlayer.addMoney(300000)
-                        TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được giải 300,000$!")
+                        -- TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được giải 300,000$!")
+                        TriggerClientEvent('esx:showNotification', -1, (Config.Language[Config.Locale]['YouHave']))
                     elseif _priceIndex == 12 then
                         -- print("Win ak gold")
                         xPlayer.addInventoryItem("attach_skin_ak", 1)
-                        TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được 1 Skin AK Gold!")
+                        -- TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được 1 Skin AK Gold!")
+                        TriggerClientEvent('esx:showNotification', -1, (Config.Language[Config.Locale]['YouHave']))
                     elseif _priceIndex == 19 then
                         -- print("Win car lp700r")
-                        TriggerClientEvent("esx_tpnrp_luckywheel:winCar", _source)
-                        TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được 1 Skin AK Gold!")
+                        TriggerClientEvent("GMD_Casinopack:winCar", _source)
+                        -- TriggerClientEvent('chatMessage', -1, '', {255,255,255}, '^8Der Bürger: ^1'.. xPlayer.name .. " đã thắng được 1 Skin AK Gold!")
+                        TriggerClientEvent('esx:showNotification', -1, (Config.Language[Config.Locale]['YouHave']))
                     end
-                    TriggerClientEvent("esx_tpnrp_luckywheel:rollFinished", -1)
+                    TriggerClientEvent("GMD_Casinopack:rollFinished", -1)
                 end)
-                TriggerClientEvent("esx_tpnrp_luckywheel:doRoll", -1, _priceIndex)
+                TriggerClientEvent("GMD_Casinopack:doRoll", -1, _priceIndex)
             else
-                TriggerClientEvent("esx_tpnrp_luckywheel:rollFinished", -1)    
-                TriggerClientEvent('esx:showNotification', _source, "Du hast leider nicht genug Geld dabei du brauchst " .. ESX.Math.GroupDigits(amount) .. "$ für 1 Spin!")
+                TriggerClientEvent("GMD_Casinopack:rollFinished", -1)    
+                TriggerClientEvent('esx:showNotification', -1, "Du hast leider nicht genug Geld dabei du brauchst " .. ESX.Math.GroupDigits(amount) .. "$ für 1 Spin!")
             end
         end
     end
