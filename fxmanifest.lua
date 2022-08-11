@@ -1,22 +1,17 @@
-fx_version 'bodacious'
+fx_version 'cerulean'
+
 game 'gta5'
 
-author 'GMD'
-version '1.0.0'
-
-client_scripts {
-    'client/ipl.lua',
-    'client/luckywheel.lua'
-} 
-server_scripts {
-    'server/luckywheel.lua'
-} 
-shared_script 'config.lua'
-
 lua54 'yes'
-
-escrow_ignore {
-    'config.lua'
+-- this_is_a_map 'yes'
+client_scripts {
+	'config.lua',
+	'client/*.lua'
+}
+-- 1100.39 220.09 -48.75
+server_scripts {
+	'config.lua',
+	'server/*.lua'
 }
 
 files {
@@ -42,5 +37,9 @@ files {
 	'audio/sfx/dlc_vinewood/casino_slot_machines_03.awc'
 }
 
-dependencies {
-}
+data_file 'AUDIO_GAMEDATA' 'audio/dlcvinewood_game.dat'
+data_file 'AUDIO_SOUNDDATA' 'audio/dlcvinewood_sounds.dat'
+data_file 'AUDIO_DYNAMIXDATA' 'audio/dlcvinewood_mix.dat'
+data_file 'AUDIO_SYNTHDATA' 'audio/dlcVinewood_amp.dat'
+data_file 'AUDIO_SPEECHDATA' 'audio/dlcvinewood_speech.dat'
+data_file 'AUDIO_WAVEPACK' 'audio/sfx/dlc_vinewood'

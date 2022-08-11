@@ -1,7 +1,7 @@
 ESX = nil
 local _wheel = nil
 local _lambo = nil
-local _isShowCar = false
+-- local _isShowCar = config.ShowCar
 local _wheelPos = vector3(978.0117, 50.34866, 73.77611)
 local _baseWheelPos = vector3(978.0117, 50.34866, 73.67611)
 
@@ -42,7 +42,7 @@ Citizen.CreateThread(function()
             _wheel = CreateObject(model, 978.0117, 50.34866, 73.92611, false, false, true)
             SetEntityHeading(_wheel, 327.99411010742)
             SetModelAsNoLongerNeeded(model)
-            spawnveh()
+            -- spawnveh()
             table.insert(casinoprops, _wheel)
             table.insert(casinoprops, _basewheel)
         end)
@@ -60,8 +60,8 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent("GMD_Casinopack:doRoll")
-AddEventHandler("GMD_Casinopack:doRoll", function(_priceIndex)
+RegisterNetEvent("esx_tpnrp_luckywheel:doRoll")
+AddEventHandler("esx_tpnrp_luckywheel:doRoll", function(_priceIndex)
     _isRolling = true
     SetEntityHeading(_wheel, 327.99411010742)
     SetEntityRotation(_wheel, 0.0, 0.0, 0.0, 1, true)
@@ -99,8 +99,8 @@ AddEventHandler("GMD_Casinopack:doRoll", function(_priceIndex)
     end)
 end)
 
-RegisterNetEvent("GMD_Casinopack:rollFinished")
-AddEventHandler("GMD_Casinopack:rollFinished", function()
+RegisterNetEvent("esx_tpnrp_luckywheel:rollFinished")
+AddEventHandler("esx_tpnrp_luckywheel:rollFinished", function()
     _isRolling = false
 end)
 
@@ -135,7 +135,7 @@ function doRoll()
                 Citizen.Wait(0)
                 DisableAllControlActions(0)
             end
-            TriggerServerEvent("GMD_Casinopack:getLucky")
+            TriggerServerEvent("esx_tpnrp_luckywheel:getLucky")
             TaskPlayAnim(playerPed, lib, 'armraisedidle_to_spinningidle_high', 8.0, -8.0, -1, 0, 0, false, false, false)
         end)
     end
@@ -145,9 +145,10 @@ end
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
+        local Cost = Config.WheelCost
         local coords = GetEntityCoords(PlayerPedId())
         if(GetDistanceBetweenCoords(coords, _wheelPos.x, _wheelPos.y, _wheelPos.z, true) < 1.5) and not _isRolling then
-            ESX.ShowHelpNotification('Drücke ~INPUT_CONTEXT~ um das Glücksrad für '..Config.LuckyWheelCost..' zu drehen.')
+            ESX.ShowHelpNotification('Drücke ~INPUT_CONTEXT~ um das Glücksrad für '..Cost..' $ zu drehen.')
             if IsControlJustReleased(0, Keys['E']) then
                 doRoll()
             end
